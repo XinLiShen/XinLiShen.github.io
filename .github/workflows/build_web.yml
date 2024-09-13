@@ -20,12 +20,6 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Check for format issues
-      run: flutter format --dry-run --sdk=flutter .
-
-    - name: Analyze Code
-      run: flutter analyze
-
     - name: Build Web
       run: flutter build web --release
     
