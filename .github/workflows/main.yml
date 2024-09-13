@@ -10,35 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.24.2'
+
       - name: Install dependencies
         run: flutter pub get
-  
-  build_web:
-    needs: env
-    runs-on: ubuntu-latest
-    steps:
-    - name: Build Web
-      run: flutter build web --release
-  
-  build_apk:
-    needs: env
-    runs-on: ubuntu-latest
-    steps:
-    - name: Build Apk
-      run: flutter build apk --release
-    
-  deploy_github_pages:
-    needs: build_web
-    runs-on: ubuntu-latest
-    steps:
-    - name: Deploy to Github Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.TOKEN }}
-        publish_dir: ./build/web
-        publish_branch: main
+
+      - name: Build Web
+        run: flutter build web --release
+
+      - name: Build Apk
+        run: flutter build apk --release
+        
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          publish_dir: ./build/web
+          publish_branch: main
 
