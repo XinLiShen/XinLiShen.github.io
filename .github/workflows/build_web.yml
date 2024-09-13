@@ -1,0 +1,31 @@
+name: Build Web
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '3.24.2'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Check for format issues
+      run: flutter format --dry-run --sdk=flutter .
+
+    - name: Analyze Code
+      run: flutter analyze
+
+    - name: Build Web
+      run: flutter build web --release
+    
