@@ -6,7 +6,7 @@ on:
       - src
 
 jobs:
-  build:
+  build_web:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +23,10 @@ jobs:
     - name: Build Web
       run: flutter build web --release
     
+  deploy_github_pages:
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Deploy to Github Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
