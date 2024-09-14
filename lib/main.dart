@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:home/home.dart';
 import 'dart:io';
+import 'package:home/notes/demo1.dart';
+
+
 void main() {
   runApp(const MainApp());
 }
@@ -9,26 +14,60 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false, // 关闭 DEBUG 标志
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: const Color.fromARGB(255, 247, 247, 245),
+        primaryColor: const Color.fromARGB(255, 246, 246, 246),
         scaffoldBackgroundColor: Colors.white,
 
        ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color.fromARGB(255, 32, 32, 32),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 25, 25, 25),
+        // highlightColor: ,
+        primaryColor: const Color.fromARGB(255, 38, 38, 38),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
       ),
       themeMode: ThemeMode.system,
-
-      home: Scaffold(
-        body: Center(
-          child: Text('file change !'),
-        ),
-      ),
+      routerConfig: router,
     );
   }
 }
+
+final router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => HomePage(),
+      routes: [
+        for (final go in notesGo)
+          GoRoute(
+            path: go.route,
+            builder: (context, state) => go.builder(context),
+          ),
+        // for ()  
+      ],
+    ),
+  ]
+);
+
+class Go {
+  final String name;
+  final String route;
+  final WidgetBuilder builder;
+
+  const Go({
+    required this.name,
+    required this.route,
+    required this.builder,  
+  });
+}
+
+final notesGo = [
+  Go(
+    name: 'test', 
+    route: Demo1.routePath, 
+    builder: (context) => Demo1(),
+  ),
+];
+

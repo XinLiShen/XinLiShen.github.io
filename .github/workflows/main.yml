@@ -6,7 +6,8 @@ on:
       - src
 
 jobs:
-  env:
+  main:
+    if: ${{ success() }}
     runs-on: ubuntu-latest
 
     steps:
