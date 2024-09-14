@@ -23,7 +23,7 @@ jobs:
         run: flutter build web --release
 
       - name: Build Apk
-        run: flutter build apk --release
+        run: flutter build apk
         
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v3
