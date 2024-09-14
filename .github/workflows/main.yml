@@ -8,7 +8,13 @@ on:
 jobs:
   env:
     runs-on: ubuntu-latest
+    container:
+      image: adoptopenjdk:17-jdk
+
     steps:
+      - name: Check Java version
+        run: java -version
+
       - uses: actions/checkout@v2
 
       - name: Set up Flutter
@@ -31,4 +37,12 @@ jobs:
           github_token: ${{ secrets.TOKEN }}
           publish_dir: ./build/web
           publish_branch: main
-
+          
+      # - name: Deploy to Server
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "$SSH_PRIVATE_KEY" > ~/.ssh/aws.pem
+      #     chmod 600 ~/.ssh/id_rsa
+      #     rsync -avz -e "ssh -i ~/.ssh/aws.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p " build/web/ ec2-user@$3.112.253.1:/home/ec2-user/deploy/home/
